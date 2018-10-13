@@ -1,14 +1,30 @@
-use esri::Esri;
+use esrilib::*;
 
 impl Esri {
-    pub fn newFromFile() -> Esri {
+    pub fn new_from_file() -> Esri {
         Esri {
-            nCols: 5,
-            nRows: 5,
-            XllCenter: 2.5,
-            YllCenter: 2.5,
-            CellSize: 1,
-            NoDataValue: -1,
+            n_cols: 5,
+            n_rows: 5,
+            xll_center: 2.5,
+            yll_center: 2.5,
+            cell_size: 1,
+            no_data_value: -1,
+            data: EsriData{
+                values: vec![
+                    0, 1, 0, 0, 1,
+                    1, 1, 0, 1, 0,
+                    1, 1, 1, 1, 1,
+                    0, 0, 1, 0, 1,
+                    1, 1, 1, 1, 0,
+                ]
+            }
         }
+    }
+
+    pub fn to_string(&self) -> String {
+        // TODO: how can I retorn format! directly?
+        let mut buf = String::new();
+        buf += &format!("[ {}, {} ]", self.n_cols, self.n_rows);
+        buf
     }
 }
