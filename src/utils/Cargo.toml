@@ -1,0 +1,6 @@
+[package]
+name = "esrilib"
+version = "0.0.1"
+authors = ["Thomas Forrer <thomas.forrer@wuerth-phoenix.com>"]
+
+[dependencies]

@@ -1,0 +1,12 @@
+[package]
+name = "esrilib"
+version = "0.1.0"
+authors = ["Thomas Forrer <thomas.forrer@wuerth-phoenix.com>"]
+
+[dependencies]
+
+[workspace]
+
+members = [
+   "esri",
+]
