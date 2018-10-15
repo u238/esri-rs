@@ -4,4 +4,4 @@ version = "0.0.1"
 authors = ["Thomas Forrer <thomas.forrer@wuerth-phoenix.com>"]
 
 [dependencies]
-
+esrilib = { path = "../esri", version = "0.0.1" }

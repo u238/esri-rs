@@ -5,4 +5,7 @@ version = "0.0.1"
 [[package]]
 name = "esriutils"
 version = "0.0.1"
+dependencies = [
+ "esrilib 0.0.1",
+]
 

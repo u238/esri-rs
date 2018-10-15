@@ -1,5 +1,7 @@
-
+extern crate esrilib;
 
 fn main() {
-    println!("Hello, world!");
+
+    let esri = esrilib::esrilib::Esri::new_from_file();
+    println!("Hello {}!", esri.to_string());
 }
