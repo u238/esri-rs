@@ -19,6 +19,8 @@ pub struct Esri {
     n_rows: i32,
     xll_center: f32,
     yll_center: f32,
+    x_origin: f32,
+    y_origin: f32,
     cell_size: i32,
     no_data_value: i32,
     data: EsriData,
