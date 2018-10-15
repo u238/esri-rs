@@ -22,9 +22,6 @@ impl Esri {
     }
 
     pub fn to_string(&self) -> String {
-        // TODO: how can I retorn format! directly?
-        let mut buf = String::new();
-        buf += &format!("[ {}, {} ]", self.n_cols, self.n_rows);
-        buf
+        format!("[ {}, {} ]", self.n_cols, self.n_rows)
     }
 }
