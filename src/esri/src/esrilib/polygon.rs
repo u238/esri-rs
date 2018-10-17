@@ -1,5 +1,8 @@
-use esrilib::Polygon;
-use esrilib::Point;
+use esrilib::point::Point;
+
+pub struct Polygon {
+    points: Vec<Point>,
+}
 
 impl Polygon {
     pub fn new(points: Vec<Point>) -> Polygon {
@@ -7,14 +10,3 @@ impl Polygon {
     }
 }
 
-impl Point {
-    pub fn add_x(&self, delta: f32) -> &mut Point {
-        self.x += delta;
-        self
-    }
-
-    pub fn add_y(&self, delta: f32) -> &mut Point {
-        self.y += delta;
-        self
-    }
-}

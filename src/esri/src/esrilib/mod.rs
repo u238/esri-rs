@@ -1,6 +1,7 @@
 pub mod parser;
 pub mod converter;
 pub mod polygon;
+pub mod point;
 /*
 ESRI format:
 
@@ -37,11 +38,3 @@ pub struct EsriData {
     values: Vec<i32>,
 }
 
-pub struct Polygon {
-    points: Vec<Point>,
-}
-
-pub struct Point {
-    x: i32,
-    y: i32,
-}

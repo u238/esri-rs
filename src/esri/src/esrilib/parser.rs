@@ -1,7 +1,7 @@
 use esrilib::*;
 
 impl Esri {
-    pub fn new_from_file() -> &mut Esri {
+    pub fn new() -> Esri {
         Esri {
             n_cols: 5,
             n_rows: 5,
@@ -11,7 +11,7 @@ impl Esri {
             y_origin: 0.0,
             cell_size: 1,
             no_data_value: -1,
-            data: EsriData{
+            data: EsriData {
                 values: vec![
                     0, 1, 0, 0, 1,
                     1, 1, 0, 1, 0,
@@ -20,7 +20,12 @@ impl Esri {
                     1, 1, 1, 1, 0,
                 ]
             }
-        }.calculate_origin()
+        }
+    }
+    pub fn new_from_file() -> Esri {
+        let mut esri = Esri::new();
+        esri.calculate_origin();
+        esri
     }
 
     fn calculate_origin(&mut self) -> &mut Esri {
