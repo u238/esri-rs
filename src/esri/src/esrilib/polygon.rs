@@ -1,5 +1,11 @@
 use esrilib::point::Point;
 
+extern crate serde;
+extern crate serde_json;
+
+//use serde_json::Error;
+
+#[derive(Serialize, Deserialize)]
 pub struct Polygon {
     points: Vec<Point>,
 }
@@ -7,6 +13,11 @@ pub struct Polygon {
 impl Polygon {
     pub fn new(points: Vec<Point>) -> Polygon {
         Polygon { points }
+    }
+
+    pub fn contains_point(&self, p: &Point) -> bool {
+        // TODO: implement
+        false
     }
 
     pub fn to_string(&self) -> String {
