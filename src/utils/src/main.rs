@@ -10,7 +10,7 @@ fn main() {
     let esri = EsriFile::new_from_file();
 
     let polygons : Vec<Polygon> = Vec::new();
-    let mut esri_polygons = esripolygons::NewEsriPolygons(esri, polygons);
+    let mut esri_polygons = esripolygons::new_esripolygons(esri, polygons);
 
     esri_polygons.to_polygons();
 

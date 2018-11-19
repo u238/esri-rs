@@ -50,6 +50,12 @@ impl fmt::Debug for Point {
     }
 }
 
+impl std::cmp::PartialEq for Point {
+    fn eq(&self, b: &Point) -> bool {
+        self.x == b.x && self.y == b.y
+    }
+}
+
 impl std::string::ToString for Point {
     fn to_string(&self) -> String {
         format!("({}, {})", self.x, self.y)

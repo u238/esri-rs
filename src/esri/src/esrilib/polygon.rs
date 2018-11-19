@@ -15,9 +15,12 @@ impl Polygon {
         Polygon { points }
     }
 
-    pub fn contains_point(&self, p: &Point) -> bool {
-        // TODO: implement
-        false
+    pub fn begins_with_point(&self, p: &Point) -> bool {
+        self.points.len() > 0 && self.points[0] == *p
+    }
+
+    pub fn ends_with_point(&self, p: &Point) -> bool {
+        self.points.len() > 0 && self.points[self.points.len()-1] == *p
     }
 
     pub fn to_string(&self) -> String {
