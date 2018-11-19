@@ -1,11 +1,11 @@
 use esrilib::point::Point;
 
-extern crate serde;
-extern crate serde_json;
+//extern crate serde;
+//extern crate serde_json;
+//
+////use serde_json::Error;
 
-//use serde_json::Error;
-
-#[derive(Serialize, Deserialize)]
+//#[derive(Serialize, Deserialize)]
 pub struct Polygon {
     points: Vec<Point>,
 }
