@@ -72,8 +72,8 @@ impl EsriFile {
 
     pub fn get_upper_left_point(&self, r: i32, c: i32) -> Point {
         Point {
-            x: self.x_origin + (r * self.cell_size),
-            y: self.y_origin + (c * self.cell_size),
+            x: self.x_origin + (r * self.cell_size) as f32,
+            y: self.y_origin + (c * self.cell_size) as f32,
         }
     }
 
