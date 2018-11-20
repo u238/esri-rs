@@ -25,117 +25,36 @@ impl EsriPolygons {
 
                 let p = self.esri.get_upper_left_point(_r, _c);
 
-                match self.esri.get_esri_data_value(_r, _c) >= self.threshold {
-                    // current cell is 0
-                    false => match self.esri.get_left_data_value(_r, _c) >= self.threshold {
-                        // left cell is 0
-                        false => match self.esri.get_upper_data_value(_r, _c) >= self.threshold {
-                            // upper cell is 0
-                            false => match self.esri.get_upper_left_data_value(_r, _c) >= self.threshold {
-                                // upper left cell is 0
-                                // 0 0
-                                // 0 0
-                                false => {
-                                    // continue
-                                }
-                                // upper left cell is 1
-                                // 1 0
-                                // 0 0
-                                true  => {}
-                            }
-                            // upper cell is 1
-                            true  => match self.esri.get_upper_left_data_value(_r, _c) >= self.threshold {
-                                // upper left cell is 0
-                                // 0 1
-                                // 0 0
-                                false => {}
-                                // upper left cell is 1
-                                // 1 1
-                                // 0 0
-                                true  => {}
-                            }
-                        }
-                        // left cell is 1
-                        true => match self.esri.get_upper_data_value(_r, _c) >= self.threshold {
-                            // upper cell is 0
-                            false => match self.esri.get_upper_left_data_value(_r, _c) >= self.threshold {
-                                // upper left cell is 0
-                                // 0 0
-                                // 1 0
-                                false => {}
-                                // upper left cell is 1
-                                // 1 0
-                                // 1 0
-                                true  => {}
-                            }
-                            // upper cell is 1
-                            true  => match self.esri.get_upper_left_data_value(_r, _c) >= self.threshold {
-                                // upper left cell is 0
-                                // 0 1
-                                // 1 0
-                                false => {}
-                                // upper left cell is 1
-                                // 1 1
-                                // 1 0
-                                true  => {}
-                            }
-                        }
+                match (
+                    self.esri.get_upper_left_data_value(_r, _c) >= self.threshold,
+                    self.esri.get_upper_data_value(_r, _c) >= self.threshold,
+                    self.esri.get_left_data_value(_r, _c) >= self.threshold,
+                    self.esri.get_esri_data_value(_r, _c) >= self.threshold
+                ) {
+                    (false, false, false, true) |
+                    (true, true, true, false) => {
+                        // new polygon
                     }
-                    // current cell is 1
-                    true => match self.esri.get_left_data_value(_r, _c) >= self.threshold {
-                        // left cell is 0
-                        false => match self.esri.get_upper_data_value(_r, _c) >= self.threshold {
-                            // upper cell is 0
-                            false => match self.esri.get_upper_left_data_value(_r, _c) >= self.threshold {
-                                // upper left cell is 0
-                                // 0 0
-                                // 0 1
-                                false => {
-
-                                }
-                                // upper left cell is 1
-                                // 1 0
-                                // 0 1
-                                true  => {}
-                            }
-                            // upper cell is 1
-                            true  => match self.esri.get_upper_left_data_value(_r, _c) >= self.threshold {
-                                // upper left cell is 0
-                                // 0 1
-                                // 0 1
-                                false => {}
-                                // upper left cell is 1
-                                // 1 1
-                                // 0 1
-                                true  => {}
-                            }
-                        }
-                        // left cell is 1
-                        true => match self.esri.get_upper_data_value(_r, _c) >= self.threshold {
-                            // upper cell is 0
-                            false => match self.esri.get_upper_left_data_value(_r, _c) >= self.threshold {
-                                // upper left cell is 0
-                                // 0 0
-                                // 1 1
-                                false => {}
-                                // upper left cell is 1
-                                // 1 0
-                                // 1 1
-                                true  => {}
-                            }
-                            // upper cell is 1
-                            true  => match self.esri.get_upper_left_data_value(_r, _c) >= self.threshold {
-                                // upper left cell is 0
-                                // 0 1
-                                // 1 1
-                                false => {}
-                                // upper left cell is 1
-                                // 1 1
-                                // 1 1
-                                true  => {}
-                            }
-                        }
+                    (true, false, false, false) |
+                    (true, false, false, true) |
+                    (false, true, true, false) |
+                    (false, true, true, true) => {
+                        // merge polygons
                     }
+                    (false, true, false, false) |
+                    (false, true, false, true) |
+                    (true, false, true, false) |
+                    (true, false, true, true) => {
+                        // add to polygon upper_cell
+                    }
+                    (true, true, false, false) |
+                    (true, true, false, true) |
+                    (false, false, true, false) |
+                    (false, false, true, true) => {
+                        // add to polygon left cell
+                    }
+                    (true, true, true, true) |
+                    (false, false, false, false) => {}
                 }
             }
         }
