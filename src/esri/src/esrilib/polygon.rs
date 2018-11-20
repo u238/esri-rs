@@ -23,6 +23,11 @@ impl Polygon {
         self.points.len() > 0 && self.points[self.points.len()-1] == *p
     }
 
+    pub fn add_point(&mut self, p: Point) -> &mut Polygon {
+        self.points.push(p);
+        self
+    }
+
     pub fn to_string(&self) -> String {
         let mut s: String = format!("[ {:?} ]", self.points);
         s.push_str("a test00");

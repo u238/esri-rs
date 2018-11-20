@@ -34,6 +34,7 @@ impl EsriPolygons {
                     (false, false, false, true) |
                     (true, true, true, false) => {
                         // new polygon
+                        self.add_polygon(p);
                     }
                     (true, false, false, false) |
                     (true, false, false, true) |
@@ -46,15 +47,25 @@ impl EsriPolygons {
                     (true, false, true, false) |
                     (true, false, true, true) => {
                         // add to polygon upper_cell
+                        let upper_cell = self.esri.get_upper_left_point_of_upper_cell(_r, _c);
+
+                        match self.search_polygon_with_ending_point(upper_cell) {
+                            Some(mut poly) => { poly.add_point(p); }
+                            None => {}
+                        }
                     }
                     (true, true, false, false) |
                     (true, true, false, true) |
                     (false, false, true, false) |
                     (false, false, true, true) => {
                         // add to polygon left cell
+                        self.add_to_polygon_with_point_of_left_cell(p, _r, _c);
+
                     }
                     (true, true, true, true) |
-                    (false, false, false, false) => {}
+                    (false, false, false, false) => {
+                        // continue
+                    }
                 }
             }
         }
@@ -62,17 +73,26 @@ impl EsriPolygons {
         self
     }
 
+    fn add_to_polygon_with_point_of_left_cell(&mut self, p: Point, r: i32, c: i32) -> Option<&mut Polygon> {
+        let left_cell = self.esri.get_upper_left_point_of_left_cell(r, c);
+
+        match self.search_polygon_with_ending_point(left_cell) {
+            Some(mut poly) => { Some(poly.add_point(p)) }
+            None => { None }
+        }
+    }
+
+    fn search_polygon_with_ending_point(&mut self, p: Point) -> Option<&mut Polygon> {
+        self.polygons.iter_mut()
+            .filter(|poly|poly.ends_with_point(&p))
+            .next()
+    }
+
     fn add_polygon(&mut self, p: Point) -> &EsriPolygons {
         let mut points = Vec::new();
         points.push(p);
         self.polygons.push(Polygon::new(points));
         self
-    }
-
-    fn search_polygon_with_ending_point(&self, p: Point) -> Option<&Polygon> {
-        self.polygons.iter()
-            .filter(|poly|poly.ends_with_point(&p))
-            .next()
     }
 
 

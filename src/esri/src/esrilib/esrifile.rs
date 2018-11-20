@@ -70,11 +70,19 @@ impl EsriFile {
         self
     }
 
-    pub fn get_upper_left_point(&self, r: i32, c: i32) -> Point {
+    pub fn get_upper_left_point(&mut self, r: i32, c: i32) -> Point {
         Point {
             x: self.x_origin + (r * self.cell_size) as f32,
             y: self.y_origin + (c * self.cell_size) as f32,
         }
+    }
+
+    pub fn get_upper_left_point_of_upper_cell(&mut self, r: i32, c: i32) -> Point {
+        self.get_upper_left_point(r-1, c)
+    }
+
+    pub fn get_upper_left_point_of_left_cell(&mut self, r: i32, c: i32) -> Point {
+        self.get_upper_left_point(r, c-1)
     }
 
     fn esri_data_coords_valid(&self, r: i32, c: i32) -> bool {
