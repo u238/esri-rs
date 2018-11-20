@@ -2,6 +2,8 @@ use esrilib::point::Point;
 use esrilib::polygon::Polygon;
 use esrilib::esrifile::EsriFile;
 
+use std::borrow::Borrow;
+
 pub struct EsriPolygons {
     esri: EsriFile,
     polygons: Vec<Polygon>,
@@ -41,6 +43,15 @@ impl EsriPolygons {
                     (false, true, true, false) |
                     (false, true, true, true) => {
                         // merge polygons
+                        let left_cell = self.esri.get_upper_left_point_of_upper_cell(_r, _c);
+
+                        let mut poly = self.add_to_polygon_with_point_of_left_cell(p, _r, _c).unwrap();
+                        let mut poly2 = self.search_polygon_with_ending_point (left_cell).unwrap();
+
+                        poly2.points.reverse();
+                        poly.points.append(&mut poly2.points);
+
+
                     }
                     (false, true, false, false) |
                     (false, true, false, true) |

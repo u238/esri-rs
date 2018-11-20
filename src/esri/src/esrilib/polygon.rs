@@ -7,7 +7,7 @@ use esrilib::point::Point;
 
 //#[derive(Serialize, Deserialize)]
 pub struct Polygon {
-    points: Vec<Point>,
+    pub points: Vec<Point>,
 }
 
 impl Polygon {
