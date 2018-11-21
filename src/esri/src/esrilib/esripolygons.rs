@@ -43,12 +43,15 @@ impl EsriPolygons {
                         // merge polygons
                         let left_cell = self.esri.get_upper_left_point_of_upper_cell(_r, _c);
 
+                        let mut points2 = {
+                            let mut poly2 = self.extract_polygon_with_ending_point (left_cell);
+                            poly2.points.reverse();
+                            poly2.points
+                        };
+
                         let mut poly = self.add_to_polygon_with_point_of_left_cell(p, _r, _c).unwrap();
-                        let mut poly2 = self.search_polygon_with_ending_point (left_cell).unwrap();
 
-                        poly2.points.reverse();
-                        poly.points.append(&mut poly2.points);
-
+                        poly.points.append(&mut points2);
 
                     }
                     (false, true, false, false) |
@@ -89,6 +92,16 @@ impl EsriPolygons {
             Some(poly) => { Some(poly.add_point(p)) }
             None => { None }
         }
+    }
+
+    fn extract_polygon_with_ending_point(&mut self, p: Point) -> &mut Polygon {
+        let v = {
+            self.polygons.iter_mut()
+                .filter(|poly| poly.ends_with_point(&p))
+                .next().unwrap()
+        };
+        self.polygons.retain(|&v| !v.ends_with_point(&p));
+        v
     }
 
     fn search_polygon_with_ending_point(&mut self, p: Point) -> Option<&mut Polygon> {
